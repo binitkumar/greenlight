@@ -276,8 +276,8 @@ en:
     search:
       start: Start searching...
   landing:
-    about: "LearnCourseOnline.com is an application providing vitural classroom facility to academic institutions. Teachers are invited to use this platform to conduct online classes free of cost."
-    welcome: Welcome to LearnCourseOnline.com.
+    about: "LearnCourseOnline.com is an application providing vitural classroom facility to academic institutions. Teachers are invited to use this platform to conduct E-learning and online Live classes free of cost. Visit us at www.learncourseonline.com"
+    welcome: ""
     video: ""
     upgrade: Show me how to upgrade to 2.0!
     version: We've released a new version of Greenlight, but your database isn't compatible.
