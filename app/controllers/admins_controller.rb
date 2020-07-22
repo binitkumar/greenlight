@@ -15,6 +15,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public License along
 # with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+require 'open-uri'
 
 class AdminsController < ApplicationController
   include Pagy::Backend
@@ -52,12 +53,13 @@ class AdminsController < ApplicationController
 
   # GET /admins/server_recordings
   def server_recordings
-    server_rooms = rooms_list_for_recordings
-
-    @search, @order_column, @order_direction, recs =
-      all_recordings(server_rooms, params.permit(:search, :column, :direction), true, true)
-
-    @pagy, @recordings = pagy_array(recs)
+    url = ENV['BIGBLUEBUTTON_ENDPOINT']
+    secrets = ENV['BIGBLUEBUTTON_SECRET']
+    cmd = 'getRecordings'
+    checksum = Digest::SHA1.hexdigest(cmd + secrets)
+    api_url = url + 'api/' + cmd + '?checksum=' + checksum
+    response = open(api_url).read
+    @recordings= Hash.from_xml(response.gsub("\n", ""))["response"]["recordings"]["recording"]
   end
 
   # GET /admins/rooms
