@@ -66,6 +66,14 @@ class RoomsController < ApplicationController
     @anyone_can_start = room_setting_with_config("anyoneCanStart")
     @room_running = room_running?(@room.bbb_id)
     @shared_room = room_shared_with_user
+    opts = default_meeting_options
+    opts[:user_is_moderator] = true
+
+    # Include the user's choices for the room settings
+    @room_settings = JSON.parse(@room[:room_settings])
+    opts[:mute_on_start] = room_setting_with_config("muteOnStart")
+    opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
+    @join_path = join_path(@room, current_user.name, opts, fetch_guest_id)
 
     # If its the current user's room
     if current_user && (@room.owned_by?(current_user) || @shared_room)
